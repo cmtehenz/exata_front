@@ -1,26 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route } from 'react-router-dom';
+import { QueryParamProvider } from 'use-query-params';
+import { ThemeProvider } from 'styled-components';
 
-function App() {
+import GlobalStyle from './styles/global';
+import Routes from './routes';
+import AppProvider from './hooks';
+import defaultTheme from './styles/themes/default';
+
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={defaultTheme}>
+      <AppProvider>
+        <BrowserRouter>
+          <QueryParamProvider ReactRouterRoute={Route}>
+            <Routes />
+          </QueryParamProvider>
+        </BrowserRouter>
+      </AppProvider>
+
+      <GlobalStyle />
+    </ThemeProvider>
   );
-}
+};
 
 export default App;
