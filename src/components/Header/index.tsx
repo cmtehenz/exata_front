@@ -1,5 +1,5 @@
 import React from 'react';
-import { FiPower } from 'react-icons/fi';
+import { FiPower, FiSettings, FiBell } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/auth';
 
@@ -25,10 +25,22 @@ const Header: React.FC = () => {
               <strong>{user.name}</strong>
             </Link>
           </div>
+          <div>
+            <button type="button" onClick={signOut}>
+              <FiBell />
+            </button>
+          </div>
+          <div>
+            <button type="button" onClick={signOut}>
+              <FiSettings />
+            </button>
+          </div>
+          <div>
+            <button type="button" onClick={signOut}>
+              <FiPower />
+            </button>
+          </div>
         </S.Profile>
-        <button type="button" onClick={signOut}>
-          <FiPower />
-        </button>
       </S.HeaderContent>
     </S.Header>
   );

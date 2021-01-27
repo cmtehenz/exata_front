@@ -9,7 +9,7 @@ export const HeaderContent = styled.div`
   max-width: 1120px;
   margin: 0 auto;
   display: flex;
-  align-items: center;
+  flex-direction: row-reverse;
   button {
     margin-left: auto;
     background: transparent;
@@ -22,6 +22,7 @@ export const Profile = styled.div`
   align-items: center;
   margin-left: 80px;
   img {
+    margin-top: 10px;
     width: 42px;
     height: 42px;
     border-radius: 50%;
@@ -29,14 +30,17 @@ export const Profile = styled.div`
   div {
     display: flex;
     flex-direction: column;
-    margin-left: 16px;
-    line-height: 24px;
+    margin-top: 10px;
+    margin-left: 30px;
+    line-height: 18px;
     span {
       color: #171c26;
+      font-size: 14px;
     }
     a {
       text-decoration: none;
       color: #2e5f67;
+      font-size: 14px;
       &:hover {
         opacity: 0.7;
       }
