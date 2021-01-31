@@ -2,7 +2,8 @@ import styled from 'styled-components';
 import { shade } from 'polished';
 
 export const Container = styled.div`
-  width: 100%;
+  width: 98%;
+  margin: 10px;
   display: flex;
   margin-top: 8px;
 `;

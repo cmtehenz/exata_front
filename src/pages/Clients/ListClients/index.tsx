@@ -157,7 +157,7 @@ const ListClients: React.FC = () => {
           <tbody>
             {clients.map(client => (
               <S.ClientRow
-                onClick={() => history.push(`/clients/edit/${client.id}`)}
+                onClick={() => history.push(`/clients/show/${client.id}`)}
                 key={client.id}
               >
                 <td>{client.name}</td>

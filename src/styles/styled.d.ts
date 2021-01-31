@@ -13,6 +13,7 @@ declare module 'styled-components' {
       background: string;
       dark: string;
       error: string;
+      label: string;
     };
   }
 }

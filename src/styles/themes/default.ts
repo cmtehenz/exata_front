@@ -10,5 +10,6 @@ export default {
     background: '#fff',
     dark: '#232129',
     error: '#EE4D64',
+    label: '#3a686f',
   },
 };
