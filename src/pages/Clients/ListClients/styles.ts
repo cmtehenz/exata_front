@@ -8,6 +8,20 @@ export const Container = styled.div`
   margin-top: 8px;
 `;
 
+export const Modal = styled.div`
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 15%;
+  padding-left: 40%;
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.7); /* Black w/ opacity */
+`;
+
 export const Content = styled.div`
   max-width: 1200px;
   width: 100%;

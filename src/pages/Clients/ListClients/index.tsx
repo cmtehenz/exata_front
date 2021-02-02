@@ -1,11 +1,11 @@
 /* eslint-disable camelcase */
 import React, { useRef, useState, useCallback, useEffect } from 'react';
-// import { Ring } from 'react-awesome-spinners';
+import Loader from 'react-loader-spinner';
 import { NumberParam, useQueryParam, StringParam } from 'use-query-params';
 import { useHistory } from 'react-router-dom';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
-import { FiSearch, FiFile } from 'react-icons/fi';
+import { FiSearch } from 'react-icons/fi';
 import api from '../../../services/api';
 
 import InputSearch from '../../../components/InputSearch';
@@ -79,25 +79,15 @@ const ListClients: React.FC = () => {
       }
     }
 
-    loadClients();
+    setTimeout(loadClients, 1000);
   }, [addToast, queryName, queryPage]);
 
   if (loading) {
     return (
       <S.Container>
-        <S.Content>
-          {/* <Header
-            initialName={queryName}
-            onSubmit={handleSearchSubmit}
-            disabled
-            createPage="/clients/register"
-            title="Clientes"
-            placeholder="Digite o nome do cliente"
-          /> */}
-          <S.MessageContainer>
-            {/* <Ring size={100} color="#FBC131" /> */}
-          </S.MessageContainer>
-        </S.Content>
+        <S.Modal>
+          <Loader type="TailSpin" color="#00BFFF" height={200} width={200} />
+        </S.Modal>
       </S.Container>
     );
   }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import Loader from 'react-loader-spinner';
 import 'react-tabs/style/react-tabs.css';
 
 import { useToast } from '../../../hooks/toast';
@@ -36,12 +37,14 @@ interface ParamTypes {
 const ShowClient: React.FC = () => {
   const { id } = useParams<ParamTypes>();
   const [client, setClient] = useState<Client>();
+  const [loading, setLoading] = useState(true);
 
   const { addToast } = useToast();
 
   useEffect(() => {
     async function loadClient(): Promise<void> {
       try {
+        setLoading(true);
         const response = await api.get(`clients/${id}`);
         setClient(response.data);
       } catch (err) {
@@ -49,10 +52,22 @@ const ShowClient: React.FC = () => {
           type: 'error',
           title: 'Erro na busca',
         });
+      } finally {
+        setLoading(false);
       }
     }
-    loadClient();
+    setTimeout(loadClient, 1000);
   }, [addToast, id]);
+
+  if (loading) {
+    return (
+      <S.Container>
+        <S.Modal>
+          <Loader type="TailSpin" color="#00BFFF" height={200} width={200} />
+        </S.Modal>
+      </S.Container>
+    );
+  }
 
   return (
     <S.Container>
