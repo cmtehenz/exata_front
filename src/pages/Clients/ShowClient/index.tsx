@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Loader from 'react-loader-spinner';
 import 'react-tabs/style/react-tabs.css';
@@ -39,6 +40,8 @@ const ShowClient: React.FC = () => {
   const [client, setClient] = useState<Client>();
   const [loading, setLoading] = useState(true);
 
+  const history = useHistory();
+
   const { addToast } = useToast();
 
   useEffect(() => {
@@ -56,7 +59,7 @@ const ShowClient: React.FC = () => {
         setLoading(false);
       }
     }
-    setTimeout(loadClient, 1000);
+    loadClient();
   }, [addToast, id]);
 
   if (loading) {
@@ -77,7 +80,9 @@ const ShowClient: React.FC = () => {
             <h1>Dados Cliente</h1>
           </div>
           <div>
-            <Button type="button">Novo cliente</Button>
+            <Button type="button" onClick={() => history.push('/clients')}>
+              Listar Clientes
+            </Button>
           </div>
         </S.Header>
         <S.Formulario>

@@ -46,6 +46,10 @@ const ListClients: React.FC = () => {
     [setQueryName, setQueryPage],
   );
 
+  const CreateNewClient = useCallback(() => {
+    history.push('/clients/new');
+  }, [history]);
+
   const incrementPage = useCallback(() => {
     setQueryPage(state => (state || 1) + 1);
   }, [setQueryPage]);
@@ -79,7 +83,7 @@ const ListClients: React.FC = () => {
       }
     }
 
-    setTimeout(loadClients, 1000);
+    loadClients();
   }, [addToast, queryName, queryPage]);
 
   if (loading) {
@@ -95,18 +99,12 @@ const ListClients: React.FC = () => {
   if (clients.length === 0) {
     return (
       <S.Container>
-        <S.Content>
-          {/* <Header
-            onSubmit={handleSearchSubmit}
-            disabled={!queryName}
-            createPage="/clients/register"
-            title="Clientes"
-            placeholder="Digite o nome do cliente"
-          /> */}
-          <S.MessageContainer>
-            <span>Nenhum cliente foi encontrado.</span>
-          </S.MessageContainer>
-        </S.Content>
+        <S.Modal>
+          <Loader type="TailSpin" color="#00BFFF" height={200} width={200} />
+        </S.Modal>
+        <S.MessageContainer>
+          <span>Nenhum cliente foi encontrado.</span>
+        </S.MessageContainer>
       </S.Container>
     );
   }
@@ -133,7 +131,9 @@ const ListClients: React.FC = () => {
             </Form>
           </div>
           <div>
-            <Button type="button">Novo cliente</Button>
+            <Button type="button" onClick={CreateNewClient}>
+              Novo cliente
+            </Button>
           </div>
         </S.Header>
         <S.Table>
