@@ -111,7 +111,11 @@ const CreateClient: React.FC = () => {
             <h1>Novo Cliente</h1>
           </div>
           <div>
-            <Button type="button" onClick={() => history.push('/clients')}>
+            <Button
+              color="#4ab9d8"
+              type="button"
+              onClick={() => history.push('/clients')}
+            >
               Listar Clientes
             </Button>
           </div>
@@ -147,7 +151,8 @@ const CreateClient: React.FC = () => {
               </S.RowBox>
               <S.RowBox>
                 <S.InfoBox>
-                  <Input
+                  <InputMask
+                    mask="(99) 9 9999-9999"
                     name="telefone"
                     icon={FiPhone}
                     placeholder="Telefone"
@@ -170,10 +175,14 @@ const CreateClient: React.FC = () => {
               </S.RowBox>
               <S.RowBox>
                 <S.InfoBox>
-                  <Button>Limpar</Button>
+                  <Button color="#f2b543" type="reset">
+                    Limpar
+                  </Button>
                 </S.InfoBox>
                 <S.InfoBox>
-                  <Button type="submit">Cadastrar</Button>
+                  <Button color="#4ab9d8" type="submit">
+                    Cadastrar
+                  </Button>
                 </S.InfoBox>
               </S.RowBox>
             </div>

@@ -34,7 +34,12 @@ export const Header = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 16px;
-  > div {
+  h1 {
+    margin-top: 30px;
+  }
+  div {
+    margin-top: 14px;
+    width: 400px;
     align-items: center;
   }
 `;

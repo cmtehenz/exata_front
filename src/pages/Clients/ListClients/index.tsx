@@ -120,8 +120,8 @@ const ListClients: React.FC = () => {
           placeholder="Digite o nome do cliente"
         /> */}
         <S.Header>
+          <h1>Clientes</h1>
           <div>
-            <h1>Clientes</h1>
             <Form ref={formRef} onSubmit={handleSearchSubmit}>
               <InputSearch
                 name="name"
@@ -131,7 +131,7 @@ const ListClients: React.FC = () => {
             </Form>
           </div>
           <div>
-            <Button type="button" onClick={CreateNewClient}>
+            <Button color="#4ab9d8" type="button" onClick={CreateNewClient}>
               Novo cliente
             </Button>
           </div>

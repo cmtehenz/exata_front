@@ -80,7 +80,11 @@ const ShowClient: React.FC = () => {
             <h1>Dados Cliente</h1>
           </div>
           <div>
-            <Button type="button" onClick={() => history.push('/clients')}>
+            <Button
+              color="#4ab9d8"
+              type="button"
+              onClick={() => history.push('/clients')}
+            >
               Listar Clientes
             </Button>
           </div>
