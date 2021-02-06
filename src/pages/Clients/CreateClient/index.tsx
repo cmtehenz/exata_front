@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import React, { useState, useRef, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import Loader from 'react-loader-spinner';
@@ -8,12 +9,20 @@ import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 
-import { FiMail } from 'react-icons/fi';
+import {
+  FiMail,
+  FiUser,
+  FiCreditCard,
+  FiFile,
+  FiPhone,
+  FiCalendar,
+} from 'react-icons/fi';
 
 import api from '../../../services/api';
 
 import DatePicker from '../../../components/DatePicker';
 import Input from '../../../components/Input';
+import InputMask from '../../../components/InputMask';
 import Button from '../../../components/Button';
 
 import { useToast } from '../../../hooks/toast';
@@ -59,7 +68,6 @@ const CreateClient: React.FC = () => {
         await schema.validate(data, {
           abortEarly: false,
         });
-
         await api.post('/clients', data);
 
         addToast({
@@ -114,26 +122,44 @@ const CreateClient: React.FC = () => {
             <div>
               <S.RowBox>
                 <S.InfoBox>
-                  <Input name="name" icon={FiMail} placeholder="Nome" />
+                  <Input name="name" icon={FiUser} placeholder="Nome" />
                 </S.InfoBox>
                 <S.InfoBox>
-                  <DatePicker name="dataNasc" locale="ptBR" />
-                </S.InfoBox>
-              </S.RowBox>
-              <S.RowBox>
-                <S.InfoBox>
-                  <Input name="cpf" icon={FiMail} placeholder="CPF" />
-                </S.InfoBox>
-                <S.InfoBox>
-                  <Input name="rg" icon={FiMail} placeholder="RG" />
+                  <DatePicker
+                    name="DataNasc"
+                    icon={FiCalendar}
+                    placeholderText="Data Nascimento"
+                  />
                 </S.InfoBox>
               </S.RowBox>
               <S.RowBox>
                 <S.InfoBox>
-                  <Input name="telefone" icon={FiMail} placeholder="Telefone" />
+                  <InputMask
+                    mask="999.999.999-99"
+                    name="cpf"
+                    icon={FiCreditCard}
+                    placeholder="CPF"
+                  />
                 </S.InfoBox>
                 <S.InfoBox>
-                  <Input name="whatsapp" icon={FiMail} placeholder="WhatsApp" />
+                  <Input name="rg" icon={FiFile} placeholder="RG" />
+                </S.InfoBox>
+              </S.RowBox>
+              <S.RowBox>
+                <S.InfoBox>
+                  <Input
+                    name="telefone"
+                    icon={FiPhone}
+                    placeholder="Telefone"
+                  />
+                </S.InfoBox>
+                <S.InfoBox>
+                  <InputMask
+                    mask="(99) 9 9999-9999"
+                    name="whatsapp"
+                    icon={FiPhone}
+                    placeholder="WhatsApp"
+                  />
                 </S.InfoBox>
               </S.RowBox>
               <S.RowBox>
