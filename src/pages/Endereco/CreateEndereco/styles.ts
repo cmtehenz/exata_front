@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { shade } from 'polished';
 
 export const Container = styled.div`
   width: 98%;
@@ -52,6 +53,7 @@ export const Formulario = styled.div`
 
 export const RowBox = styled.div`
   padding-left: 5px;
+  margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
 `;
@@ -60,44 +62,9 @@ export const InfoBox = styled.div`
   margin: 5px 5px 5px 5px;
   padding-left: 5px;
   width: 48%;
-  border-radius: 8px;
-  background: ${({ theme }) => theme.colors.shape};
-  height: 60px;
-
-  p {
-    margin-left: 10px;
-  }
 `;
 
 export const Label = styled.div`
   color: ${({ theme }) => theme.colors.label};
   font-size: 22px;
-`;
-
-export const BoxWrapp = styled.div`
-  width: 100%;
-  button {
-    width: 250px;
-  }
-`;
-
-export const BoxTabs = styled.div`
-  margin-top: 10px;
-`;
-
-export const BoxData = styled.div`
-  border: 1px solid #171c26;
-  border-radius: 6px;
-  padding: 4px;
-  margin-bottom: 2px;
-`;
-
-export const BoxLabel = styled.div`
-  color: ${({ theme }) => theme.colors.label};
-  font-size: 14px;
-  margin-bottom: 8px;
-  p {
-    color: #171c26;
-    font-size: 12px;
-  }
 `;

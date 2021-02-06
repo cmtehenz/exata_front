@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Loader from 'react-loader-spinner';
+import { format } from 'date-fns';
 import 'react-tabs/style/react-tabs.css';
 
 import { useToast } from '../../../hooks/toast';
@@ -18,15 +18,27 @@ interface Client {
   email: string;
   rg: string;
   telefone: string;
+  whatsapp: string;
   dataNasc: Date;
   emprestimos: [
     {
       id: string;
+      valor: string;
+      dataRealizado: Date;
+      dataFinalizado: Date;
+      status: string;
     },
   ];
   addresses: [
     {
       id: string;
+      endereco: string;
+      numero: string;
+      complemento: string;
+      bairro: string;
+      cidade: string;
+      estado: string;
+      cep: string;
     },
   ];
 }
@@ -49,6 +61,9 @@ const ShowClient: React.FC = () => {
       try {
         setLoading(true);
         const response = await api.get(`clients/${id}`);
+        const createdAtDate = new Date(response.data.dataNasc);
+        const dateFormated = createdAtDate.toLocaleDateString('pt-BR');
+        response.data.dataNasc = dateFormated;
         setClient(response.data);
       } catch (err) {
         addToast({
@@ -117,6 +132,12 @@ const ShowClient: React.FC = () => {
                 <p>{client?.telefone}</p>
               </S.InfoBox>
               <S.InfoBox>
+                <S.Label>Whatsapp</S.Label>
+                <p>{client?.whatsapp}</p>
+              </S.InfoBox>
+            </S.RowBox>
+            <S.RowBox>
+              <S.InfoBox>
                 <S.Label>Email</S.Label>
                 <p>{client?.email}</p>
               </S.InfoBox>
@@ -131,14 +152,83 @@ const ShowClient: React.FC = () => {
               </TabList>
 
               <TabPanel>
-                {client?.addresses.map(endereco => (
-                  <Button key={endereco.id}>{endereco.id}</Button>
-                ))}
+                <S.Container>
+                  <S.BoxWrapp>
+                    <Button
+                      color="#4ab9d8"
+                      onClick={() =>
+                        // eslint-disable-next-line prettier/prettier
+                      history.push(`/clients/adressnew/${client?.id}`)}
+                    >
+                      Novo endereço
+                    </Button>
+                    <S.BoxTabs>
+                      {client?.addresses.map(endereco => (
+                        <S.BoxData key={endereco.id}>
+                          <S.BoxLabel>
+                            Endereço:
+                            <p>
+                              {endereco.endereco}
+                              ,&nbsp;
+                              {endereco.numero}
+                              &nbsp;
+                              {endereco.complemento}
+                            </p>
+                            <p>
+                              Bairro: &nbsp;
+                              {endereco.bairro}
+                              ,&nbsp; Cidade: &nbsp;
+                              {endereco.cidade}
+                              ,&nbsp;
+                              {endereco.estado}
+                              &nbsp; CEP: &nbsp;
+                              {endereco.cep}
+                            </p>
+                          </S.BoxLabel>
+                        </S.BoxData>
+                      ))}
+                    </S.BoxTabs>
+                  </S.BoxWrapp>
+                </S.Container>
               </TabPanel>
               <TabPanel>
-                {client?.emprestimos.map(loan => (
-                  <p key={loan.id}>{loan.id}</p>
-                ))}
+                <S.Container>
+                  <S.BoxWrapp>
+                    <Button
+                      color="#4ab9d8"
+                      onClick={() =>
+                        // eslint-disable-next-line prettier/prettier
+                      history.push(`/clients/adressnew/${client?.id}`)}
+                    >
+                      Novo empréstimo
+                    </Button>
+                    <S.BoxTabs>
+                      {client?.emprestimos.map(loan => (
+                        <S.BoxData key={loan.id}>
+                          <S.BoxLabel>
+                            Empréstimo:
+                            <p>
+                              Valor:&nbsp;
+                              {loan.valor}
+                              &nbsp; Data Realizado: &nbsp;
+                              {format(
+                                new Date(loan.dataRealizado),
+                                'dd/MM/yyyy',
+                              )}
+                              &nbsp; Data Finalizado: &nbsp;
+                              {format(
+                                new Date(loan.dataFinalizado),
+                                'dd/MM/yyyy',
+                              )}
+                              &nbsp; Status: &nbsp;
+                              {loan.status}
+                            </p>
+                          </S.BoxLabel>
+                        </S.BoxData>
+                      ))}
+                    </S.BoxTabs>
+                  </S.BoxWrapp>
+                </S.Container>
               </TabPanel>
               <TabPanel>
                 <h2>Any content 3</h2>
