@@ -1,64 +1,44 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import React, {
-  InputHTMLAttributes,
-  useEffect,
-  useRef,
-  useState,
-  useCallback,
-} from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import ReactDatePicker, { ReactDatePickerProps } from 'react-datepicker';
+import { useField } from '@unform/core';
 import { IconBaseProps } from 'react-icons';
 import { FiAlertCircle } from 'react-icons/fi';
-import { useField } from '@unform/core';
-import ReactDatePicker, {
-  ReactDatePickerProps,
-  registerLocale,
-} from 'react-datepicker';
-import ptBR from 'date-fns/locale/pt-BR';
-
 import 'react-datepicker/dist/react-datepicker.css';
+import ptBR from 'date-fns/locale/pt-BR';
 
 import { Container, Error } from './styles';
 
-registerLocale('ptBR', ptBR);
-
-interface InputProps extends Omit<ReactDatePickerProps, 'onChange'> {
+interface Props extends Omit<ReactDatePickerProps, 'onChange'> {
   name: string;
   containerStyle?: object;
   icon?: React.ComponentType<IconBaseProps>;
 }
 
-const DatePicker: React.FC<InputProps> = ({
+const DatePicker: React.FC<Props> = ({
   name,
   containerStyle = {},
   icon: Icon,
   ...rest
 }) => {
-  const inputRef = useRef(null);
+  const datepickerRef = useRef(null);
 
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
 
-  const { fieldName, defaultValue, error, registerField } = useField(name);
-
+  const { fieldName, registerField, defaultValue, error } = useField(name);
   const [date, setDate] = useState(defaultValue || null);
-
-  const handleInputFocus = useCallback(() => {
-    setIsFocused(true);
-  }, []);
-
-  const handleInputBlur = useCallback(() => {
-    setIsFocused(false);
-    // setIsFilled(!!inputRef.current?.value);
-  }, []);
 
   useEffect(() => {
     registerField({
       name: fieldName,
-      ref: inputRef.current,
-      path: 'value',
+      ref: datepickerRef.current,
+      path: 'props.selected',
+      clearValue: (ref: any) => {
+        ref.clear();
+      },
     });
   }, [fieldName, registerField]);
-
   return (
     <Container
       style={containerStyle}
@@ -69,13 +49,13 @@ const DatePicker: React.FC<InputProps> = ({
     >
       {Icon && <Icon size={20} />}
       <ReactDatePicker
-        locale="ptBR"
-        dateFormat="dd/MM/yyyy"
-        onFocus={handleInputFocus}
-        onBlur={handleInputBlur}
+        // onFocus={handleInputFocus}
+        // onBlur={handleInputBlur}
         selected={date}
         onChange={setDate}
-        ref={inputRef}
+        locale={ptBR}
+        dateFormat="dd/MM/yyyy"
+        ref={datepickerRef}
         {...rest}
       />
       {error && (
@@ -86,5 +66,4 @@ const DatePicker: React.FC<InputProps> = ({
     </Container>
   );
 };
-
 export default DatePicker;

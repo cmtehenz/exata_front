@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import React, { useState, useRef, useCallback } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
@@ -9,7 +10,7 @@ import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 
-import { FiMail, FiHome } from 'react-icons/fi';
+import { FiCalendar, FiHome } from 'react-icons/fi';
 
 import api from '../../../services/api';
 
@@ -22,26 +23,22 @@ import * as S from './styles';
 import getValidationErrors from '../../../utils/getValidationErrors';
 
 import 'react-datepicker/dist/react-datepicker.css';
-import InputMask from '../../../components/InputMask';
+import InputCurrency from '../../../components/Form/InputCurrency';
+import DatePicker from '../../../components/DatePicker';
 
-registerLocale('ptBR', ptBR);
-
-interface EnderecoDataForm {
+interface EmprestimoDataForm {
   clientId: string;
-  endereco: string;
-  numero: string;
-  complemento: string;
-  bairro: string;
-  cidade: string;
-  estado: string;
-  cep: string;
+  valor: string;
+  dataRealizado: string;
+  dataFinalizado: string;
+  status: string;
 }
 
 interface ParamTypes {
   id: string;
 }
 
-const CreateEndereco: React.FC = () => {
+const CreateEmprestimo: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const [loading, setLoading] = useState(false);
   const history = useHistory();
@@ -49,39 +46,36 @@ const CreateEndereco: React.FC = () => {
   const { id } = useParams<ParamTypes>();
 
   const handleSubmit = useCallback(
-    async (data: EnderecoDataForm) => {
+    async (data: EmprestimoDataForm) => {
       try {
-        // eslint-disable-next-line no-param-reassign
         data.clientId = id;
         setLoading(true);
         formRef.current?.setErrors({});
         const schema = Yup.object().shape({
-          endereco: Yup.string(),
-          numero: Yup.string(),
-          complemento: Yup.string(),
-          bairro: Yup.string(),
-          cidade: Yup.string(),
-          estado: Yup.string(),
-          cep: Yup.string(),
+          valor: Yup.number(),
+          dataFinalizado: Yup.string(),
+          dataRealizado: Yup.string(),
+          status: Yup.string(),
         });
 
         await schema.validate(data, {
           abortEarly: false,
         });
 
-        await api.post('/clients/address', data);
+        await api.post('/emprestimos', data);
 
         addToast({
           type: 'success',
-          title: 'Cadastro endereço',
-          description: 'Foi efetuado o cadastro do novo endereço com sucesso. ',
+          title: 'Cadastro empréstimo',
+          description:
+            'Foi efetuado o cadastro do novo emprestimo com sucesso. ',
         });
         history.goBack();
       } catch (err) {
         addToast({
           type: 'error',
           title: 'Erro ao cadastrar',
-          description: `Ocorreu um erro ao tentar salvar o endereço, tente novamente.${err.message}`,
+          description: `Ocorreu um erro ao tentar salvar o emprestimo, tente novamente.${err.message}`,
         });
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
@@ -110,7 +104,7 @@ const CreateEndereco: React.FC = () => {
       <S.Content>
         <S.Header>
           <div>
-            <h1>Novo Endereço</h1>
+            <h1>Novo Empréstimo</h1>
           </div>
           <div>
             <Button
@@ -128,42 +122,37 @@ const CreateEndereco: React.FC = () => {
             <div>
               <S.RowBox>
                 <S.InfoBox>
-                  <Input name="endereco" icon={FiHome} placeholder="Endereço" />
+                  <InputCurrency
+                    name="valor"
+                    label="Valor"
+                    // icon={FiHome}
+                    placeholder="Valor"
+                  />
                 </S.InfoBox>
-                <S.InfoBox>
-                  <Input name="numero" icon={FiHome} placeholder="Numero" />
-                </S.InfoBox>
-              </S.RowBox>
-              <S.RowBox>
                 <S.InfoBox>
                   <Input
-                    name="complemento"
+                    name="status"
                     icon={FiHome}
-                    placeholder="Complemento"
+                    placeholder="Status"
+                    defaultValue="Aberto"
                   />
-                </S.InfoBox>
-                <S.InfoBox>
-                  <Input name="bairro" icon={FiHome} placeholder="Bairro" />
                 </S.InfoBox>
               </S.RowBox>
               <S.RowBox>
                 <S.InfoBox>
-                  <Input name="cidade" icon={FiHome} placeholder="Cidade" />
-                </S.InfoBox>
-                <S.InfoBox>
-                  <Input name="estado" icon={FiHome} placeholder="Estado" />
-                </S.InfoBox>
-              </S.RowBox>
-              <S.RowBox>
-                <S.InfoBox>
-                  <InputMask
-                    mask="99.999-999"
-                    name="cep"
-                    icon={FiMail}
-                    placeholder="Cep"
+                  <DatePicker
+                    name="dataRealizado"
+                    icon={FiHome}
+                    placeholderText="Data Realizado"
                   />
                 </S.InfoBox>
-                <S.InfoBox />
+                <S.InfoBox>
+                  <DatePicker
+                    name="dataFinalizado"
+                    icon={FiCalendar}
+                    placeholderText="Data Finalizado"
+                  />
+                </S.InfoBox>
               </S.RowBox>
               <S.RowBox>
                 <S.InfoBox>
@@ -185,4 +174,4 @@ const CreateEndereco: React.FC = () => {
   );
 };
 
-export default CreateEndereco;
+export default CreateEmprestimo;

@@ -131,7 +131,7 @@ const CreateClient: React.FC = () => {
                 <S.InfoBox>
                   <DatePicker
                     name="DataNasc"
-                    icon={FiCalendar}
+                    // icon={FiCalendar}
                     placeholderText="Data Nascimento"
                   />
                 </S.InfoBox>

@@ -198,7 +198,7 @@ const ShowClient: React.FC = () => {
                       color="#4ab9d8"
                       onClick={() =>
                         // eslint-disable-next-line prettier/prettier
-                      history.push(`/clients/adressnew/${client?.id}`)}
+                      history.push(`/clients/loannew/${client?.id}`)}
                     >
                       Novo empréstimo
                     </Button>
